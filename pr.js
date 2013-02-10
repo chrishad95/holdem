@@ -1,17 +1,23 @@
-var app = require('express').createServer()
-  , io = require('socket.io').listen(app);
+var express = require('express');
+//var app = express();
+//var io = require('socket.io').listen(app);
+var app = express()
+  , http = require('http')
+  , server = http.createServer(app)
+  , io = require('socket.io').listen(server);
+
+server.listen(process.env.PORT);
 
 var holdem  = {
-	games: new Array(),
-	players: new Array(),
-	player_names: new Array(),
+	games: [],
+	players: [],
+	player_names: [],
 	games_counter: 0,
 	min_players: 2,
 	guests: 0,
 	check_hands: []
 };
 
-app.listen(9090);
 
 app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
@@ -293,7 +299,7 @@ io.sockets.on('connection', function (socket) {
 					var elem = action.split(' ');
 					if (elem[1] == "pot"){
 						bet = game.pot;
-					} elseif (elem[1] == "halfpot"){
+					} else if (elem[1] == "halfpot"){
 						bet = game.pot / 2;
 					} else {
 						bet = parseInt(elem[1]);

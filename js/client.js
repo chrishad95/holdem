@@ -28,8 +28,8 @@ $(function () {
 	img.onload = function(){
 		image_loaded = true;
 	}
-
-	socket = io.connect('http://rasputin.dnsalias.com:9090');
+    
+	socket = io.connect(null);
 	socket.on('chat', function (data) {
 		appendchat(data.message);
 		});
