@@ -6,7 +6,7 @@ var app = express()
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
 
-server.listen(process.env.PORT);
+server.listen(9090);
 
 var holdem  = {
 	games: [],
@@ -586,6 +586,16 @@ function setupGame(id){
 		game.action = "bet";
 	}
 }
+function randomstring (num){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < num; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 
 function resetGame(id){
 
